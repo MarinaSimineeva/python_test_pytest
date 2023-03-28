@@ -4,6 +4,8 @@ import pytest
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 
+from data import INVENTORY_URL
+
 
 class TestPositiveAuthScenario:
 
@@ -23,12 +25,12 @@ class TestPositiveAuthScenario:
         input_login.send_keys(username)
         input_password.send_keys(password)
         input_password.send_keys(Keys.ENTER)
-        actual_url = driver.current_url
 
         WebDriverWait(driver, 20).until(
             EC.presence_of_element_located((By.CLASS_NAME, "inventory_list"))
         )
-        assert actual_url == "https://www.saucedemo.com/inventory.html", "The authorized user isn't redirected to " \
+        actual_url = driver.current_url
+        assert actual_url == INVENTORY_URL, "The authorized user isn't redirected to " \
                                                                          "inventory list "
         assert driver.find_element(By.ID, "shopping_cart_container").is_displayed(), "Inventory list isn't " \
                                                                                      "displayed "
